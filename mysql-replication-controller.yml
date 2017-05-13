@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: ReplicationController
+
+# metadatos del controlador de replicación
+# Como mínimo se necesita un conjunto de etiquetas para identificar el pod
+# gestionado por este controlador de replicación
+metadata:
+  name: "mysql-replication-controller"
+  labels:
+    app: "mysql-app"
+
+# Indica el numero de replicas que se deben de generar para un pod determinado
+# El pod es indicado, mediante un selector utilizando etiquetas en la busqueda
+spec:
+  # numero de pods que siempre deben de estar en ejecución
+  replicas: 1
+  selector:
+    app: "mysql-app"
+
+  # template
+  # utilizado para generar los pods
+  # las etiquetas son utilizadas por el replication controller, para generar multiples pods
+  template:
+    metadata:
+      labels:
+        app: "mysql-app"
+
+    # spec
+    # Utilizado para generar el container en ejecución dentro del pod
+    # Un nombre de imagen (a descargar desde el docker hub)
+    # y un nombre para el container local son necesarios
+    spec:
+
+      # se solicita un volumen para este POD
+      volumes:
+        - name: mysql-cluster-storage
+          persistentVolumeClaim:
+            claimName: mysql-persistent-volume-claim
+
+      containers:
+        - name: "mysql"
+          image: "mysql"
+          env:
+            # Se establece una contraseña al container (usuario root por defecto)
+            - name: "MYSQL_ROOT_PASSWORD"
+              value: "mysql"
+          # se expone el puerto en el que el servicio de mysql se encuentra ejecutando dentro del container
+          ports:
+            - containerPort: 3306
+
+          # se monta el volumen disponible en el pod, al container
+          volumeMounts:
+            - mountPath: "/var/lib/mysql"
+              name: mysql-cluster-storage

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+
+metadata:
+  name: mysql-persistent-volume-claim
+
+# Estado deseado del recurso
+spec:
+
+  # El recurso a ubicar, necesita al menos los siguientes permisos
+  accessModes:
+    - ReadWriteOnce
+
+  # Se solicita un recurso con al menos 3 GB de capacidad de almacenamiento
+  resources:
+    requests:
+      storage: 3Gi
