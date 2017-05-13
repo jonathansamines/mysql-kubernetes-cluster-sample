@@ -1,16 +1,15 @@
 apiVersion: v1
 kind: Service
 
-# metadatos para la creación del servicio
 # un servicio es utilizado para exponer mediante una interfaz específica
 # un conjunto de pods, distribuidos en uno o mas nodos
 # Un servicio al menos necesita:
 #  - nombre: identifica al servicio
 #  - etiquetas: utilizadas para realizar busquedas sobre el servicio
 metadata:
-  name: mysql
+  name: mysql-service
   labels:
-    app: "mysql-app"
+    app: "mysql"
 
 # exposición del servicio
 # Se expone el servicio en un puerto determinado (3306)

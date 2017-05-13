@@ -1,9 +1,8 @@
 apiVersion: v1
 kind: ReplicationController
 
-# metadatos del controlador de replicación
 # Como mínimo se necesita un conjunto de etiquetas para identificar el pod
-# gestionado por este controlador de replicación
+# gestionado por este controlador de replicación y un nombre único en el cluster
 metadata:
   name: "mysql-replication-controller"
   labels:
@@ -40,10 +39,12 @@ spec:
       containers:
         - name: "mysql"
           image: "mysql"
+
+          # Se establece una contraseña al container (usuario root por defecto)
           env:
-            # Se establece una contraseña al container (usuario root por defecto)
             - name: "MYSQL_ROOT_PASSWORD"
               value: "mysql"
+
           # se expone el puerto en el que el servicio de mysql se encuentra ejecutando dentro del container
           ports:
             - containerPort: 3306
