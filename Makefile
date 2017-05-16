@@ -1,5 +1,5 @@
 WEB_IMAGE_NAME=control-web
 
-web:
-	@echo "Creando contenedor de aplicacion web"
-	@docker build -t "$(WEB_IMAGE_NAME)" .
+build-web-v1:
+	@echo "Creando contenedor de aplicacion web 1"
+	@docker build -t "$(WEB_IMAGE_NAME):v1" .

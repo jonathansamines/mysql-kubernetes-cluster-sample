@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ReplicationController
+
+metadata:
+  name: web-replication-controller
+  labels:
+    type: web
+    app: group-control-web
+
+spec:
+  replicas: 2
+  selector:
+    app: "web-app"
+
+  # template
+  # utilizado para generar los pods
+  # las etiquetas son utilizadas por el replication controller, para generar multiples pods
+  template:
+    metadata:
+      labels:
+        app: "web-app"
+
+    # spec
+    # Utilizado para generar el container en ejecución dentro del pod
+    # Un nombre de imagen (a descargar desde el docker hub)
+    # y un nombre para el container local son necesarios
+    spec:
+
+      containers:
+        - name: "control-web"
+          image: "control-web:v1"
+
+          # se expone el puerto en el que el servicio de tomcat se encuentra ejecutando dentro del container
+          ports:
+            - containerPort: 8080

@@ -12,7 +12,7 @@ metadata:
 # El pod es indicado, mediante un selector utilizando etiquetas en la busqueda
 spec:
   # numero de pods que siempre deben de estar en ejecución
-  replicas: 1
+  replicas: 4
   selector:
     app: "mysql-app"
 
